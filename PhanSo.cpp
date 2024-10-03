@@ -25,7 +25,18 @@ class phanSo{
 		phanSo& operator -= ( const phanSo &ps) ;
 		phanSo& operator *= ( const phanSo &ps) ;
 		phanSo& operator /= ( const phanSo &ps) ;
-		
+		phanSo &operator ++();
+		phanSo &operator ++(int i);
+		phanSo &operator --();
+		phanSo &operator --( int i);
+		bool operator > ( const phanSo &ps) const;
+		bool operator < ( const phanSo &ps) const;
+		bool operator >= ( const phanSo &ps) const;
+		bool operator <= ( const phanSo &ps) const;
+		bool operator == ( const phanSo &ps) const;
+		bool operator != ( const phanSo &ps) const;
+		friend istream &operator >> (istream &in, phanSo &ps);
+		friend ostream &operator << (ostream &out, phanSo &ps);
 };
 
 phanSo::phanSo(){
@@ -142,31 +153,58 @@ phanSo &phanSo::operator /=( const phanSo &ps){
 	rutgon();
 	return *this;
 }
+phanSo &phanSo::operator ++(){
+	++tu;
+	return *this;
+}
+phanSo &phanSo::operator ++(int i){
+	tu--;
+	return *this;
+}
+phanSo &phanSo::operator --(){
+	--tu;
+	return *this;
+}
+phanSo &phanSo::operator --(int i){
+	tu--;
+	return *this;
+}
+
+
+
+bool phanSo::operator < ( const phanSo& ps) const{
+	return (float(tu/mau) < float(ps.tu/ps.mau));
+}
+bool phanSo::operator > ( const phanSo& ps) const{
+	return (float(tu/mau) > float(ps.tu/ps.mau));
+}
+bool phanSo::operator <= ( const phanSo& ps) const{
+	return (float(tu/mau) <= float(ps.tu/ps.mau));
+}
+bool phanSo::operator >= ( const phanSo& ps) const{
+	return (float(tu/mau) >= float(ps.tu/ps.mau));
+}
+bool phanSo::operator == ( const phanSo& ps) const{
+	return (float(tu/mau) == float(ps.tu/ps.mau));
+}
+bool phanSo::operator != ( const phanSo& ps) const{
+	return (float(tu/mau) != float(ps.tu/ps.mau));
+}
+
+istream &operator >> (istream &in, phanSo &ps){
+	in>> ps.tu >> ps.mau;
+	return in;
+}
+ostream &operator << (ostream &out, phanSo &ps){
+	out<<ps.tu << "/" << ps.mau;
+	return out;
+}
+
+
 int main(){
-	phanSo ps;
-	int t,m;
-	cin>>t>>m;
-	ps.thietlap(t,m);
- 	cout << "Phan so ps1: " << ps.layTuSo() << "/" << ps.layMauSo() << endl;
-	phanSo ps2(1,3);
-	cout << "Phan so ps2: " << ps2.layTuSo() << "/" << ps2.layMauSo() << endl;
-	phanSo ps3 = ps + ps2;
-	cout<<"Toan tu + - * / : \n";
-	cout<<	"phan so ps3 sau khi cong "<< ps3.layTuSo()<< "/" << ps3.layMauSo() << endl;
-	ps3 = ps - ps2;
-	cout<<	"phan so ps3 sau khi tru "<< ps3.layTuSo()<< "/" << ps3.layMauSo() << endl;
-	ps3 = ps * ps2;
-	cout<<	"phan so ps3 sau khi nhan "<< ps3.layTuSo()<< "/" << ps3.layMauSo() << endl;
-	ps3 = ps / ps2;
-	cout<<	"phan so ps3 sau khi chia "<< ps3.layTuSo()<< "/" << ps3.layMauSo() << endl;
-	cout<<"Toan tu += -= *= /= : \n" ;
-	ps += ps2;
-	cout<< "Phan so ps1 += ps2 sau khi cong " << ps.layTuSo()<<"/"<<ps.layMauSo()<<endl;
-	ps -= ps2;
-	cout<< "Phan so ps1 -= ps2 sau khi cong " << ps.layTuSo()<<"/"<<ps.layMauSo()<<endl;
-	ps *= ps2;
-	cout<< "Phan so ps1 *= ps2 sau khi cong " << ps.layTuSo()<<"/"<<ps.layMauSo()<<endl;
-	ps /= ps2;
-	cout<< "Phan so ps1 /= ps2 sau khi cong " << ps.layTuSo()<<"/"<<ps.layMauSo()<<endl;
+	phanSo ps1,ps2;
+	cin>>ps1;
+	cin>>ps2;
+
 	return 0;
 }
